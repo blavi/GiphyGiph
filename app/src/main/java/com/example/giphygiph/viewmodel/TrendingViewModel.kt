@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.example.giphygiph.intent.UserIntent
-import com.example.giphygiph.repository.Repository
+import com.example.giphygiph.interactor.FetchGifsInteractor
 import com.example.giphygiph.viewstate.TrendingViewState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class TrendingViewModel @ViewModelInject constructor(private val repository: Repository) : ViewModel() {
+class TrendingViewModel @ViewModelInject constructor(private val interactor: FetchGifsInteractor) : ViewModel() {
 
     val userIntent = Channel<UserIntent>(Channel.UNLIMITED)
     private val _state = MutableStateFlow<TrendingViewState>(TrendingViewState.Idle)
@@ -39,11 +39,8 @@ class TrendingViewModel @ViewModelInject constructor(private val repository: Rep
     fun loadGifs() {
         viewModelScope.launch {
             _state.value = TrendingViewState.Loading
-            _state.value = try {
-                TrendingViewState.LoadedGifs(repository.getTrendingGifs())
-            } catch (e: Exception) {
-                TrendingViewState.Error(e.localizedMessage)
-            }
+
+            _state.value = interactor.fetchGifs()
         }
     }
 

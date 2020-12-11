@@ -9,9 +9,5 @@ import dagger.hilt.android.HiltAndroidApp
 class GifyGifApp : Application()  {
     override fun onCreate() {
         super.onCreate()
-
-        val builder = VmPolicy.Builder()
-        StrictMode.setVmPolicy(builder.build())
-        builder.detectFileUriExposure()
     }
 }

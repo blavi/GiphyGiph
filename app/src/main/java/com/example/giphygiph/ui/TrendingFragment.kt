@@ -50,7 +50,7 @@ class TrendingFragment : Fragment() {
 
     private fun loadGiphs() {
         EspressoIdlingResource.increment()
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed {
             trendingViewModel.userIntent.send(UserIntent.LoadGifs)
         }
     }

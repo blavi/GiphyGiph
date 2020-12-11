@@ -48,4 +48,8 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideApiHelper(apiHelperImpl: ApiProviderImpl): ApiProvider = apiHelperImpl
+//
+//    @Provides
+//    @Singleton
+//    fun provideRepository(repository: Repository): Repository = apiHelperImpl
 }
